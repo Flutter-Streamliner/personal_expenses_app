@@ -24,8 +24,10 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Scaffold(
+      appBar: AppBar(title: Text('Flutter App'),),
+      body: Column(
+          //mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
@@ -34,6 +36,32 @@ class MyHomePage extends StatelessWidget {
                 color: Colors.blue,
                 elevation: 1,
                 child: Text('CHART'),
+              ),
+            ),
+            Card(
+              elevation: 3,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Title',
+                      ),
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Amount',
+                      ),
+                    ),
+                    FlatButton(
+                      child: Text('Add Transaction',),
+                      textColor: Colors.purple,
+                      onPressed: (){},
+                    ),
+                  ],
+                ),
               ),
             ),
             Column(
@@ -78,7 +106,8 @@ class MyHomePage extends StatelessWidget {
               }).toList(),
             ),
           ],
-        );
+        ),
+    );
   }
 
 }
