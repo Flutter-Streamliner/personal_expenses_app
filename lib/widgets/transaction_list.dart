@@ -12,10 +12,10 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: SingleChildScrollView(
-        child: Column(
-                  children: transactions.map((transaction){
-                    return Card(
+      child: ListView.builder(
+        itemCount: transactions.length,
+        itemBuilder: (context, int index){
+          return Card(
                       child: Row(
                         children: <Widget>[
                           Container(
@@ -31,7 +31,7 @@ class TransactionList extends StatelessWidget {
                             ),
                             padding: EdgeInsets.all(10),
                             child: Text(
-                              '\$${transaction.amount.toString()}',
+                              '\$${transactions[index].amount.toStringAsFixed(2)}',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -42,9 +42,9 @@ class TransactionList extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(transaction.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
+                              Text(transactions[index].title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
                               Text(
-                                DateFormat.yMMMd().format(transaction.date),
+                                DateFormat.yMMMd().format(transactions[index].date),
                                 style: TextStyle(color: Colors.grey,),
                               ),
                             ],
@@ -52,8 +52,7 @@ class TransactionList extends StatelessWidget {
                         ],
                       ),
                     );
-                  }).toList(),
-                ),
+        },
       ),
     );
   }
