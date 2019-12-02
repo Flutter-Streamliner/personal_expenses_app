@@ -23,7 +23,15 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Flutter App'),),
+      appBar: AppBar(
+        title: Text('Flutter App'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add), 
+            onPressed: (){},
+          ), 
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
             //mainAxisAlignment: MainAxisAlignment.start,
@@ -40,6 +48,11 @@ class MyHomePage extends StatelessWidget {
               UserTransactions(),
             ],
           ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: (){},
       ),
     );
   }
