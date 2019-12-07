@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ), 
       ],
     );
-    final pageBody = SingleChildScrollView(
+    final pageBody = SafeArea (child: SingleChildScrollView(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -153,7 +153,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ) : _buildTransactionList(appBar, mediaQuery),
             ],
           ),
-      );
+      ),
+    );
     return Platform.isIOS 
       ? CupertinoPageScaffold(
         child: pageBody,
