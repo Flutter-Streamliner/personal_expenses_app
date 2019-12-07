@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:personal_expenses_app/models/transaction.dart';
@@ -96,7 +97,20 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final MediaQueryData mediaQuery = MediaQuery.of(context);
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
-    final appBar = AppBar(
+    final PreferredSizeWidget appBar = Platform.isIOS
+      ? CupertinoNavigationBar(
+        middle: Text('Personal Expenses'),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            GestureDetector(
+              child: Icon(CupertinoIcons.add),
+              onTap: () => _startAddNewTransaction(context),
+            ),
+          ],
+        ),
+      )
+      : AppBar(
       title: Text('Personal Expenses'),
       actions: <Widget>[
         IconButton(
@@ -105,10 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ), 
       ],
     );
-    
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
+    final pageBody = SingleChildScrollView(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -142,7 +153,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 ) : _buildTransactionList(appBar, mediaQuery),
             ],
           ),
-      ),
+      );
+    return Platform.isIOS 
+      ? CupertinoPageScaffold(
+        child: pageBody,
+        navigationBar: appBar,
+      )
+      : Scaffold(
+      appBar: appBar,
+      body: pageBody,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Platform.isIOS 
         ? Container()
@@ -153,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _buildTransactionList(AppBar appBar, MediaQueryData mediaQuery){
+  Widget _buildTransactionList(PreferredSizeWidget appBar, MediaQueryData mediaQuery){
     return Container(
                   height: (mediaQuery.size.height - appBar.preferredSize.height - 
                     mediaQuery.padding.top) * 0.7, 
