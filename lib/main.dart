@@ -92,7 +92,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final MediaQueryData mediaQuery = MediaQuery.of(context);
+    bool isLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Personal Expenses'),
       actions: <Widget>[
@@ -125,17 +126,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               if (!isLandscape) 
                 Container(
-                  height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - 
-                    MediaQuery.of(context).padding.top) * 0.3, 
+                  height: (mediaQuery.size.height - appBar.preferredSize.height - 
+                    mediaQuery.padding.top) * 0.3, 
                   child: Chart(_recentTransactions),
                 ),
-              if (!isLandscape) _buildTransactionList(appBar), 
+              if (!isLandscape) _buildTransactionList(appBar, mediaQuery), 
               if (isLandscape) _showChart ? 
                 Container(
-                  height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - 
-                    MediaQuery.of(context).padding.top) * 0.7, 
+                  height: (mediaQuery.size.height - appBar.preferredSize.height - 
+                    mediaQuery.padding.top) * 0.7, 
                   child: Chart(_recentTransactions),
-                ) : _buildTransactionList(appBar),
+                ) : _buildTransactionList(appBar, mediaQuery),
             ],
           ),
       ),
@@ -147,10 +148,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _buildTransactionList(AppBar appBar) {
+  Widget _buildTransactionList(AppBar appBar, MediaQueryData mediaQuery){
     return Container(
-                  height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - 
-                    MediaQuery.of(context).padding.top) * 0.7, 
+                  height: (mediaQuery.size.height - appBar.preferredSize.height - 
+                    mediaQuery.padding.top) * 0.7, 
                   child: TransactionList(transactions: _userTransactions, deleteTransaction: _deleteTransaction),
                 );
   }
