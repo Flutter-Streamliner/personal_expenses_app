@@ -17,7 +17,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Platform.isIOS
+      ? CupertinoApp(
+        title: 'Personal Expenses',
+        home: MyHomePage(),
+        theme: CupertinoThemeData(
+          primaryColor: Colors.purple,
+          textTheme: CupertinoTextThemeData(),
+        ),
+      )
+      : MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.purple, 
         accentColor: Colors.amber,
@@ -72,13 +81,22 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _startAddNewTransaction(BuildContext context) {
-    showModalBottomSheet(context: context, builder: (_){
-        return GestureDetector(
-          child:NewTransaction(addTransaction: _addNewTransaction),
-          onTap: (){},
-          behavior: HitTestBehavior.opaque,
-        );
-    });
+    if (Platform.isIOS) {
+      showCupertinoModalPopup(
+        context: context,
+        builder: (_) {
+          return NewTransaction(addTransaction: _addNewTransaction);
+        }
+      );
+    } else {
+      showModalBottomSheet(context: context, builder: (_){
+          return GestureDetector(
+            child:NewTransaction(addTransaction: _addNewTransaction),
+            onTap: (){},
+            //behavior: HitTestBehavior.opaque,
+          );
+      });
+    }
   }
 
   void _deleteTransaction(String id) {
@@ -103,9 +121,12 @@ class _MyHomePageState extends State<MyHomePage> {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            GestureDetector(
-              child: Icon(CupertinoIcons.add),
-              onTap: () => _startAddNewTransaction(context),
+            Container(
+              color: Colors.red,
+              child: GestureDetector(
+                child: Icon(CupertinoIcons.add),
+                onTap: () { print('click');_startAddNewTransaction(context);},
+              ),
             ),
           ],
         ),
