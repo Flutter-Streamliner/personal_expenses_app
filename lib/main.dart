@@ -121,12 +121,9 @@ class _MyHomePageState extends State<MyHomePage> {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Container(
-              color: Colors.red,
-              child: GestureDetector(
-                child: Icon(CupertinoIcons.add),
-                onTap: () { print('click');_startAddNewTransaction(context);},
-              ),
+            GestureDetector(
+              child: Icon(CupertinoIcons.add),
+              onTap: () { print('click');_startAddNewTransaction(context);},
             ),
           ],
         ),
